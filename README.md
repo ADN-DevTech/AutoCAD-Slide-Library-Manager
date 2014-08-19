@@ -21,8 +21,14 @@ It can be used by any other WPF application. It exposes three objects which are:
   1. Create a Wpf Application 
   2. Project -> Manage NuGet Packages...
   3. Search and Install 'AutoCAD Slide Control' package
+  
+or if the package does not show use the console
 
+  1. Create a Wpf Application 
+  2. Tools -> NuGet Package Manager -> Package Manager Console
+  3. On the console, enter: Install-Package AutoCAD.Slide.Control
 
+  
 ### SlideObject
 
 This class gives you access to 'slide' object.
