@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>AutoCAD.Slide.Control</id>
+        <version>1.0.0</version>
+        <title>AutoCAD Slide Control</title>
+        <authors>Cyrille Fauvel</authors>
+        <owners>Autodesk Developer Network</owners>
+        <licenseUrl>https://raw.github.com/ADN-DevTech/AutoCAD-Slide-Control/master/LICENSE.md</licenseUrl>
+        <projectUrl>https://github.com/ADN-DevTech/AutoCAD-Slide-Control</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>AutoCAD WPF Slide control</description>
+        <copyright>Autodesk, Inc.</copyright>
+        <language>en-US</language>
+        <tags>AutoCAD Slide</tags>
+    </metadata>
+</package>
