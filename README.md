@@ -6,7 +6,7 @@ It can read any version of AutoCAD slides, or slide libraries.
 It can also read any slide format (platform dependent such as UNIX, MAC, INTEL), and convert them into PNG transparent images.
 
 
-# The WPF Slide Control
+## The WPF Slide Control
 
 The ‘Slide' control is a WPF control which displays slides under Windows platforms.
 It can be used by any other WPF application. It exposes three objects which are:
@@ -16,13 +16,13 @@ It can be used by any other WPF application. It exposes three objects which are:
   * SlideCtrl - the control itself
 
   
-Install using NuGet:
+### Install using NuGet:
   1. Create a Wpf Application 
   2. Project -> Manage NuGet Packages...
   3. Search and Install 'AutoCAD Slide Control' package
 
 
-## SlideObject
+### SlideObject
 
 This class gives you access to 'slide' object.
 
@@ -45,7 +45,7 @@ Example
 ``` 
 
 
-## SlideLibObject
+### SlideLibObject
 
 This class gives you access to 'slide library' object.
 
@@ -70,7 +70,7 @@ is equivalent to
 ```
 
 
-## SlideCtrl
+### SlideCtrl
 
 This control allows you to display AutoCAD Slides in a WPF application.
 
@@ -83,6 +83,7 @@ This control allows you to display AutoCAD Slides in a WPF application.
       <SlideCtrlNS:SlideCtrl x:Name="preview" />
 ```
 
+Example
 ``` xml
 <Window x:Class="WpfApplication1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
