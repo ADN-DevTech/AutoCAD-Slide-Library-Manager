@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/TR/REC-html40" xml:lang="en" dir="ltr" class="js">
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<title>{{AppDescription}}</title>
+</head>
+
+<style> 
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, hr, pre, code, form, fieldset, legend, input, textarea, blockquote, table, th, td {
+  padding: 0;
+  margin: 0;
+}
+a{color:#1F5397;text-decoration:none}
+body {font-family:"Arial", "Helvetica", "sans-serif";font-size:12.0px;margin:15px}
+p {font-size:12.0px;line-height:16px;padding:0px;margin:5px 0px 5px 0px}
+ol {font-size:12.0px;line-height:16px;padding:0px;margin:5px 0px 5px 20px}
+h1 {font-size:22.0px;height="26px"}
+.separator-line {border-bottom;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#C3C3C3}
+h2 {font-size:16.0px;line-height:18px;height:16px;margin-bottom:3px;margin-top:15px}
+h3 {font-size:14.0px;line-height:16px;height:14px;margin-bottom:3px;margin-top:15px}
+#plugin-icon{float:left;width:94px;height:94px}
+#plugin-name{margin-left:94px}
+#plugin-description{margin-left:94px;margin-top:3px;margin-bottom:40px}
+#navigation{margin-bottom:10px;clear:both}
+.nav-link-spacer {margin:0px 5px 0px 5px}
+.command {margin-top:5px;margin-bottom:3px}
+.command.icon {float:left;width:34px;height:34px}
+.command.name {font-weight:bold;padding-top:4px;margin:0px 0px 0px 34px}
+.command.description {margin:0px 0px 0px 34px}
+.versionset {margin-bottom:5px}
+.version {float:left;width:50px}
+.versioninfo-bullet {margin-left:50px}
+.screenshots {}
+.clearboth {clear:both}
+.thumbnail {float:left; width:207px;margin: 0px 20px 0px 0px}
+.caption { font-weight:bold}
+</style>
+<body>
+<div id="heading">
+	<div id="plugin-icon"><img width="83" height="84" src="{{AppName}}.png"></div>
+	<div id="plugin-name"><h1 class="separator-line">{{AppName}}</h1></div>
+	<p id="plugin-description"><em>{{AppDescription}} description.</em><br />
+	
+	</p>
+</div>
+
+<div id="navigation">Getting Started<span class="nav-link-spacer">|</span><a href="#Install">Install/Uninstall</a><span class="nav-link-spacer">|</span><a href="#AdditionalInfo">Additional Information</a><span class="nav-link-spacer">|</span><a href="#Contact">Contact</a><span class="nav-link-spacer">|</span><a class="navigation-link" href="#VersionHistory">Version History</a></p>
+
+<h2 id="GettingStarted" name="GettingStarted">Getting Started</h2>
+	<p>To launch the plug-in, use the following command(s)</p>
+	<div class="command">
+		<div class="command icon"><img width="32" height="32" src="{{AppName}}.png" alt="Icon"></div>
+		<div class="command name">MyCommand</div>
+		<div class="command description">
+		<p>{{AppDescription}} command(s) description.</p>
+		</div>
+	</div>
+	<div class="command">
+	</div>
+
+<h3>Usage</h3>
+	<p>No usage description provided.</p>
+	
+<h3>Screenshots</h3>
+	<div class="screenshots">
+		<div class="thumbnail">
+			<a href="" target="_blank">
+				<img src="" height="131" /></a><br />
+			<span class="caption"></span>
+		</div>
+	</div>	
+	<br class="clearboth" />
+	
+<h2 id="Install" name="Install">Installation and Uninstallation</h2>
+	<p>The installer that ran when you downloaded this plug-in from Maya Exchange 
+	has already installed the plug-in. You may need to restart Maya to activate 
+	the plug-in.</p>
+	<p><b>Windows only:</b> To uninstall this plug-in, simply rerun the installer by downloading it again 
+	from Exchange, and select the 'Uninstall' button, or you can uninstall it from 
+	'Control Panel\Programs\Programs and Features' (Windows 7) or Add/Remove 
+	Programs (Windows XP), just as you would uninstall any other application from 
+	your system. The panel on the Plug-ins tab will not be removed until Maya is restarted.</p>
+	<p><b>Linux and OSX:</b> To uninstall this plug-in, simply delete the module directory from your system. 
+	The panel on the Plug-ins tab will not be removed until Maya is restarted.</p>
+
+<h3>Available on</h3>
+	<table>
+		<tr><td><img height=48 src="win64.png" /></td><td><img height=48 src="macos64.png" /></td><td><img height=48 src="linux64.png" /></td></tr>
+		<tr><td align="center">Windows</td><td align="center">Mac OSX</td><td align="center">Linux</td></tr>
+	<table>
+
+<h2 id="AdditionalInfo" name="AdditionalInfo">Additional Information</h2>
+	<p>This plug-in was written by {{Publisher}}.</p>
+
+<h3>Known Issues</h3>
+	<p>None.</p>
+
+<h2 id="Contact" name="Contact">Contact</h2>
+	<p>
+	For more information on developing with Maya, please visit the 
+	<a href="http://www.autodesk.com/developmaya">Maya Developer Center</a>.</p>
+	
+<h3>Support Information</h3>
+	<p>If you do encounter issues the please contact {{Publisher}} either by email or phone, the details are listed below:<br />
+		<li>Telephone: {{PublisherPhone}}</a></li>
+		<li>Email: <a href="mailto:{{PublisherEmail}}">{{PublisherEmail}}</a></li>
+	</p>
+
+<h2 id="VersionHistory" name="VersionHistory">Version History</h2>
+	<div class="versionset">
+	<div class="version">{{AppVersion}}</div><div class="versioninfo-bullet">Original release</div>
+	</div>
+	
+</body>
+</html>

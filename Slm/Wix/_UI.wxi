@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"> 
+
+	<Binary Id="hddin" SourceFile="winBinary\hddin.bmp" />
+	<Binary Id="okBmp" SourceFile="winBinary\ok.bmp" />
+	<Binary Id="hddout" SourceFile="winBinary\hddout.bmp" />
+	<Binary Id="banner" SourceFile="winBinary\banner.bmp" />
+	<Binary Id="WarningIcon" SourceFile="winBinary\WarningIcon.bmp" />
+	<Binary Id="ShellExecute.exe" SourceFile="winBinary\ShellExecute.exe" />
+	<Binary Id="SetAllUsers.dll" SourceFile="winBinary\SetAllUsers.dll" />
+
+	<UI>
+	
+		<TextStyle Id="Tahoma8" FaceName="Tahoma" Size="8" />
+		<TextStyle Id="TahomaBold8" FaceName="Tahoma" Size="8" Bold="yes" />
+		<TextStyle Id="TahomaBold9" FaceName="Tahoma" Size="9" Bold="yes" />
+		<TextStyle Id="TahomaBold10" FaceName="Tahoma" Size="10" Bold="yes" />
+		<TextStyle Id="TahomaBoldBlue10" FaceName="Tahoma" Size="10" Red="0" Green="0" Blue="255" Bold="yes" />
+		<TextStyle Id="Arial8" FaceName="Arial" Size="8" />
+		<TextStyle Id="ArialBlue8" FaceName="Arial" Size="8" Red="0" Green="0" Blue="255" />
+		<TextStyle Id="MSSansSerif8" FaceName="MS Sans Serif" Size="8" />
+		<TextStyle Id="MSSansBold8" FaceName="Tahoma" Size="8" Bold="yes" />
+		<TextStyle Id="SegoeWhite15" FaceName="Segoe" Size="15" Red="255" Green="255" Blue="255" />
+		<TextStyle Id="SegoeWhiteBold16" FaceName="Segoe" Size="16" Red="255" Green="255" Blue="255" Bold="yes" />
+
+		<!-- Start / End Dialogs -->
+		<Dialog Id="WelcomeForm" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="Cancel" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Cancel" TabSkip="no" Cancel="yes">
+				<Publish Event="SpawnDialog" Value="CancelSetup">1</Publish>
+			</Control>
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="InstallNowBtn" Type="PushButton" X="118" Y="89" Width="100" Height="30" Text="{&amp;TahomaBoldBlue10}{\TahomaBold10}&amp;Install Now" TabSkip="no" Default="yes">
+				<Publish Event="NewDialog" Value="OutOfSpace"><![CDATA[OutOfNoRbDiskSpace = 1]]></Publish>
+				<Publish Event="EndDialog" Value="Return"><![CDATA[OutOfNoRbDiskSpace <> 1]]></Publish>
+			</Control>
+			<Control Id="ViewEulaBtn" Type="PushButton" X="13" Y="195" Width="160" Height="20" Text="{\MSSansSerif8}View Store &amp;Terms and Conditions" TabSkip="no">
+				<Publish Event="DoAction" Value="LaunchEulaHTML">1</Publish>
+			</Control>
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+		</Dialog>
+		
+		<Dialog Id="MaintenanceForm" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="Cancel" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Cancel" TabSkip="no" Cancel="yes">
+				<Publish Event="EndDialog" Value="Exit">1 </Publish>
+			</Control>
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="ReInstallBtn" Type="PushButton" X="62" Y="107" Width="100" Height="30" Text="{\TahomaBold10}&amp;Repair/Reinstall" TabSkip="no" Default="yes">
+				<Publish Event="Reinstall" Value="ALL">1 </Publish>
+				<Publish Property="REINSTALL" Value="ALL">1</Publish>
+				<Publish Property="ProgressType" Value="Reinstalling">1</Publish>
+				<Publish Event="EndDialog" Value="Return">1</Publish>
+			</Control>
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="RemoveNowBtn" Type="PushButton" X="182" Y="107" Width="100" Height="30" Text="{\TahomaBold10}&amp;Uninstall" TabSkip="no">
+				<Publish Event="Remove" Value="ALL">1</Publish>
+				<Publish Property="REMOVE" Value="ALL">1</Publish>
+				<Publish Property="ProgressType" Value="Uninstalling">1</Publish>
+				<Publish Event="EndDialog" Value="Return">1</Publish>
+			</Control>
+			<Control Id="Text1" Type="Text" X="45" Y="80" Width="254" Height="22" Text="{&amp;MSSansBold8}This product is already installed. What would you like to do?" TabSkip="yes" />
+		</Dialog>
+		
+		<Dialog Id="CancelSetup" X="50" Y="50" Width="260" Height="85" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="No" Type="PushButton" X="136" Y="57" Width="66" Height="17" Text="&amp;No" TabSkip="no" Default="yes" Cancel="yes">
+				<Publish Event="EndDialog" Value="Return">1</Publish>
+			</Control>
+			<Control Id="Yes" Type="PushButton" X="62" Y="57" Width="66" Height="17" Text="&amp;Yes" TabSkip="no">
+				<Publish Event="EndDialog" Value="Exit">1</Publish>
+			</Control>
+			<Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" Text="WarningIcon" TabSkip="yes" Disabled="yes" IconSize="32" FixedSize="yes" />
+			<Control Id="Text" Type="Text" X="48" Y="15" Width="194" Height="30" Text="Are you sure you want to cancel [ProductName] installation?" TabSkip="yes" NoPrefix="yes" />
+		</Dialog>
+
+		<Dialog Id="SetupCompleteSuccess" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="OK" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Close" TabSkip="no" Default="yes" Cancel="yes">
+				<Publish Event="EndDialog" Value="Exit">1</Publish>
+			</Control>
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="SuccessRemovedText" Type="Text" X="87" Y="82" Width="251" Height="21" Text="{\TahomaBold9}Your product has been removed successfully." TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType="Uninstalling"]]></Condition>
+			</Control>
+			<Control Id="DocBtn" Type="PushButton" X="115" Y="109" Width="112" Height="32" Text="{\TahomaBold10}View &amp;Documentation" TabSkip="no" Hidden="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND Not PATCH]]></Condition>
+				<Publish Event="DoAction" Value="LaunchDocHTML">1</Publish>
+			</Control>
+			<Control Id="SuccessPatched" Type="Text" X="87" Y="82" Width="251" Height="21" Text="{\TahomaBold9}Success! Your product has been upgraded." TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND PATCH]]></Condition>
+			</Control>
+			<Control Id="SuccessInstalledText" Type="Text" X="87" Y="82" Width="251" Height="21" Text="{\TahomaBold9}Success! Your product has been installed." TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND Not PATCH]]></Condition>
+			</Control>
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="Icon1" Type="Icon" X="61" Y="76" Width="24" Height="24" Text="okBmp" TabSkip="no" Disabled="yes" IconSize="32" FixedSize="yes" />
+		</Dialog>
+			
+		<Dialog Id="SetupInterrupted" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="Finish" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Close" TabSkip="no" Default="yes" Cancel="yes">
+				<Condition Action="default"><![CDATA[NOT UpdateStarted]]></Condition>
+				<Publish Event="EndDialog" Value="Exit">1</Publish>
+			</Control>
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="UpgradeCanceledText" Type="Text" X="121" Y="88" Width="217" Height="21" Text="{\TahomaBold9}Upgrade cancelled" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND PATCH]]></Condition>
+			</Control>
+			<Control Id="CloseText" Type="Text" X="97" Y="121" Width="160" Height="11" Text="{\Tahoma8}Click Close to exit." TabSkip="no" Transparent="yes" />
+			<Control Id="InstallCanceledText" Type="Text" X="121" Y="88" Width="217" Height="21" Text="{\TahomaBold9}Install cancelled" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND Not PATCH]]></Condition>
+			</Control>
+			<Control Id="UninstallCanceledText" Type="Text" X="121" Y="88" Width="217" Height="21" Text="{\TahomaBold9}Uninstall cancelled" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType="Uninstalling"]]></Condition>
+			</Control>
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="Icon1" Type="Icon" X="88" Y="81" Width="24" Height="24" Text="WarningIcon" TabSkip="no" Disabled="yes" IconSize="32" FixedSize="yes" />
+		</Dialog>
+		
+		<Dialog Id="SetupCompleteError" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="Finish" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Close" TabSkip="no" Default="yes" Cancel="yes">
+				<Condition Action="default"><![CDATA[NOT UpdateStarted]]></Condition>
+				<Publish Event="EndDialog" Value="Exit">1</Publish>
+			</Control>
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="ErrorPatchText" Type="Text" X="121" Y="88" Width="217" Height="21" Text="{\TahomaBold9}Upgrade failed to install" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND PATCH]]></Condition>
+			</Control>
+			<Control Id="ContactText" Type="Text" X="112" Y="121" Width="160" Height="11" Text="{\Tahoma8}Please contact the publisher at" TabSkip="no" Transparent="yes" />
+			<Control Id="EmailText" Type="Text" X="109" Y="137" Width="160" Height="14" Text="{\ArialBlue8}[PUBLISHEREMAIL]" TabSkip="no" Hidden="yes" Transparent="yes" />
+			<Control Id="ErrorInstallText" Type="Text" X="121" Y="88" Width="217" Height="21" Text="{\TahomaBold9}Product failed to install" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND Not PATCH]]></Condition>
+			</Control>
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="Icon1" Type="Icon" X="88" Y="81" Width="24" Height="24" Text="WarningIcon" TabSkip="no" Disabled="yes" IconSize="32" FixedSize="yes" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="EmailButton" Type="PushButton" X="109" Y="134" Width="140" Height="20" Text="{\Arial8}[PUBLISHEREMAIL]" TabSkip="no">
+				<Publish Event="DoAction" Value="LaunchEmail">1</Publish>
+			</Control>
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ErrorUninstallText" Type="Text" X="121" Y="88" Width="217" Height="21" Text="{\TahomaBold9}Product failed to remove" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType="Uninstalling"]]></Condition>
+			</Control>
+		</Dialog>
+		
+		<!-- System Dialogs -->
+		<Dialog Id="ProgressForm" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" Modeless="yes" NoMinimize="yes">
+			<Control Id="Cancel" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Cancel" TabSkip="no" Default="yes" Cancel="yes">
+				<Publish Event="SpawnDialog" Value="CancelSetup">1</Publish>
+			</Control>
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="PleaseWaitText" Type="Text" X="142" Y="152" Width="113" Height="16" Text="{\TahomaBold8}Please wait..." TabSkip="no" Transparent="yes" />
+			<Control Id="UpdatingText" Type="Text" X="160" Y="91" Width="101" Height="18" Text="{\TahomaBold9}Updating" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND PATCH]]></Condition>
+			</Control>
+			<Control Id="ProgressBar" Type="ProgressBar" X="51" Y="127" Width="243" Height="14" TabSkip="no" Disabled="yes" ProgressBlocks="yes">
+				<Subscribe Event="InstallFiles" Attribute="Progress" />
+				<Subscribe Event="MoveFiles" Attribute="Progress" />
+				<Subscribe Event="RemoveFiles" Attribute="Progress" />
+				<Subscribe Event="RemoveRegistryValues" Attribute="Progress" />
+				<Subscribe Event="WriteIniValues" Attribute="Progress" />
+				<Subscribe Event="WriteRegistryValues" Attribute="Progress" />
+				<Subscribe Event="UnmoveFiles" Attribute="Progress" />
+				<Subscribe Event="AdminInstallFinalize" Attribute="Progress" />
+				<Subscribe Event="SetProgress" Attribute="Progress" />
+				</Control>
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="RemovingIcon" Type="Icon" X="121" Y="79" Width="35" Height="35" Text="hddout" TabSkip="no" Hidden="yes" Disabled="yes" IconSize="48" FixedSize="yes">
+				<Condition Action="show"><![CDATA[ProgressType="Uninstalling"]]></Condition>
+			</Control>
+			<Control Id="InstallingIcon" Type="Icon" X="121" Y="79" Width="35" Height="35" Text="hddin" TabSkip="no" Hidden="yes" Disabled="yes" IconSize="48" FixedSize="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling"]]></Condition>
+			</Control>
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="RemovingText" Type="Text" X="160" Y="91" Width="101" Height="18" Text="{\TahomaBold9}Removing" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType="Uninstalling"]]></Condition>
+			</Control>
+			<Control Id="InstallingText" Type="Text" X="160" Y="91" Width="101" Height="18" Text="{\TahomaBold9}Installing" TabSkip="no" Hidden="yes" Transparent="yes">
+				<Condition Action="show"><![CDATA[ProgressType<>"Uninstalling" AND Not PATCH]]></Condition>
+			</Control>
+		</Dialog>
+		
+		<Dialog Id="OutOfSpace" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes">
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="ProductText" Type="Text" X="10" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="CompanyText" Type="Text" X="10" Y="5" Width="325" Height="23" Text="{\SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="List" Type="VolumeCostList" X="21" Y="94" Width="300" Height="85" Text="{120}{70}{70}{70}{70}" TabSkip="yes" Sunken="yes" Fixed="yes" Remote="yes" />
+			<Control Id="DlgText" Type="Text" X="21" Y="51" Width="300" Height="43" Text="The highlighted volumes do not have enough disk space available for the currently selected features. You can remove files from the highlighted volumes, choose to install fewer features onto local drives, or select different destination drives." TabSkip="yes" />
+			<Control Id="Cancel" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Cancel" TabSkip="no" Default="yes" Cancel="yes">
+				<Publish Event="EndDialog" Value="Exit">1</Publish>
+			</Control>
+		</Dialog>
+
+		<Dialog Id="FilesInUse" X="50" Y="50" Width="344" Height="225" Title="Autodesk Plug-in Installer" NoMinimize="yes" KeepModeless="yes">
+			<Control Id="Retry" Type="PushButton" X="130" Y="197" Width="66" Height="17" Text="&amp;Retry" TabSkip="no" Default="yes">
+				<Publish Event="EndDialog" Value="Retry">1</Publish>
+			</Control>
+			<Control Id="Ignore" Type="PushButton" X="196" Y="197" Width="66" Height="17" Text="&amp;Ignore" TabSkip="no">
+				<Publish Event="EndDialog" Value="Ignore">1</Publish>
+			</Control>
+			<Control Id="ProductText" Type="Text" X="9" Y="21" Width="325" Height="23" Text="{\SegoeWhite15}[ProductName] [FRIENDLYVERSION]" TabSkip="no" Transparent="yes" />
+			<Control Id="List" Type="ListBox" X="21" Y="87" Width="300" Height="84" Property="FileInUseProcess" TabSkip="no" Sunken="yes" />
+			<Control Id="Exit" Type="PushButton" X="265" Y="197" Width="66" Height="17" Text="&amp;Exit" TabSkip="no" Cancel="yes">
+				<Publish Event="EndDialog" Value="Exit">1</Publish>
+			</Control>
+			<Control Id="TitleBarBmp" Type="Bitmap" X="0" Y="0" Width="344" Height="45" Text="banner" TabSkip="no" Disabled="yes" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="187" Width="346" Height="1" TabSkip="no" Disabled="yes" Sunken="yes" />
+			<Control Id="CompanyText" Type="Text" X="9" Y="4" Width="325" Height="23" Text="{SegoeWhiteBold16}[Manufacturer]" TabSkip="no" Transparent="yes" />
+			<Control Id="DlgText" Type="Text" X="21" Y="51" Width="300" Height="33" Text="The following applications are using files that need to be updated by this setup. Close these applications and click Retry to continue." TabSkip="yes" />
+		</Dialog>
+		
+		<Dialog Id="SetupError" X="50" Y="50" Width="270" Height="110" Title="Autodesk Plug-in Installer" ErrorDialog="yes">
+			<Control Id="ErrorText" Type="Text" X="50" Y="15" Width="200" Height="50" Text="&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;&lt;error text goes here&gt;" TabSkip="no" NoPrefix="yes" />
+			<Control Id="Y" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;Yes" TabSkip="yes">
+				<Publish Event="EndDialog" Value="ErrorYes">1</Publish>
+			</Control>
+			<Control Id="N" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;No" TabSkip="yes">
+				<Publish Event="EndDialog" Value="ErrorNo">1</Publish>
+			</Control>
+			<Control Id="A" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;Abort" TabSkip="yes">
+				<Publish Event="EndDialog" Value="ErrorAbort">1</Publish>
+			</Control>
+			<Control Id="C" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;Cancel" TabSkip="yes" Cancel="yes">
+				<Publish Event="EndDialog" Value="ErrorCancel">1</Publish>
+			</Control>
+			<Control Id="I" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;Ignore" TabSkip="yes">
+				<Publish Event="EndDialog" Value="ErrorIgnore">1</Publish>
+			</Control>
+			<Control Id="O" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;OK" TabSkip="yes" Default="yes">
+				<Publish Event="EndDialog" Value="ErrorOk">1</Publish>
+			</Control>
+			<Control Id="R" Type="PushButton" X="192" Y="80" Width="66" Height="17" Text="&amp;Retry" TabSkip="yes">
+				<Publish Event="EndDialog" Value="ErrorRetry">1</Publish>
+			</Control>
+			<Control Id="ErrorIcon" Type="Icon" X="15" Y="15" Width="24" Height="24" Text="WarningIcon" TabSkip="yes" Disabled="yes" IconSize="32" FixedSize="yes" />
+		</Dialog>
+
+		<!-- User Dialogs -->
+		<!-- Add your own UI here -->
+		
+	</UI>
+
+</Include> 

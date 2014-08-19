@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+	<?define RTMProductVersion = "0.0.1"?> <!-- The first one - edit with caution -->
+	<?define ProductVersion = "1.0.0"?>
+	<?define UpgradeCode = "{15E31EE4-3FB5-4A70-9E82-F2B518F84A43}"?>
+	
+	<Product
+		Id="{52B034C3-5FF2-4B05-940C-57836B737304}"
+		Codepage="1252"
+		Language="1033"
+		Manufacturer="Autodesk"
+		Name="AutoCAD Slide Manager"
+		UpgradeCode="$(var.UpgradeCode)" 
+		Version="$(var.ProductVersion)"
+		>
+		
+		<Package 
+			Comments="Installer by Cyrille Fauvel, Autodesk" 
+			Description="AutoCAD Slide Manager" 
+			InstallPrivileges="elevated" 
+			InstallScope="perMachine"
+			InstallerVersion="405" 
+			Keywords="AutoCAD Slide Manager" 
+			Manufacturer="Autodesk" 
+			Languages="1033" 
+			Compressed="yes" 
+			Platform="x64"
+			/>
+
+		<Media Id="1" Cabinet="Slm.cab" EmbedCab="yes" CompressionLevel="high" VolumeLabel="DISK #1'" />
+		<!-- If you want an icon in the Control Panel install/uninstall dialog uncomment the 2 lines below and provide an icon -->
+		
+		<Icon Id="Slm.ico" SourceFile="../Images/Slm.ico" />
+		<Property Id="ARPPRODUCTICON" Value="Slm.ico" />
+		
+		
+		<?include directory.wxi ?>
+		<?include feature.wxi ?>
+		<?include property.wxi ?>
+		<?include _UI.wxi ?>
+		
+		<!-- Condition Message='{{AppDescription}} requires that Autodesk Maya {{VERSION}} be installed on your system prior to installation'>
+			MAYA_INSTALL_LOCATION
+		</Condition -->
+		
+		<CustomAction Id="LaunchDocHTML" BinaryKey="ShellExecute.exe" ExeCommand="[DOCUMENTATIONURL]" />
+		<CustomAction Id="LaunchEulaHTML" BinaryKey="ShellExecute.exe" ExeCommand="[EULAURL]" />
+		<CustomAction Id="LaunchEmail" BinaryKey="ShellExecute.exe" ExeCommand="mailto:[PUBLISHEREMAIL]" />
+		
+		<CustomAction Id="CA_INSTALLDIR" Property="INSTALLDIR" Value="[ProgramFilesFolder]Autodesk/" Execute="firstSequence" />
+		<InstallUISequence> <!-- msiexec /i -->
+			<Custom Action="CA_INSTALLDIR" After="AppSearch"><![CDATA[INSTALLDIR=""]]></Custom>
+			<Show Dialog="WelcomeForm" Before="CostFinalize"><![CDATA[(Not Installed And (Not SKIP_WELCOME_UI)) OR (Installed And (RESUME Or Preselected) And Not PATCH)]]></Show>
+			<Show Dialog="MaintenanceForm" Before="CostFinalize"><![CDATA[Installed And Not RESUME And Not Preselected And Not PATCH]]></Show>
+			<Show Dialog="ProgressForm" Before="ExecuteAction" />
+			
+			<Show Dialog="SetupCompleteError" OnExit="error"><![CDATA[NOT HideFatalErrorForm]]></Show>
+			<Show Dialog="SetupInterrupted" OnExit="cancel" />
+			<Show Dialog="SetupCompleteSuccess" OnExit="success" />
+			
+			<Custom Action="PreventDowngrading" After="FindRelatedProducts"><![CDATA[NEWERPRODUCTFOUND]]></Custom>
+		</InstallUISequence>
+		<InstallExecuteSequence>
+			<Custom Action="CA_INSTALLDIR" Before="CostInitialize"><![CDATA[INSTALLDIR=""]]></Custom>
+			<Custom Action="PreventDowngrading" After="FindRelatedProducts"><![CDATA[NEWERPRODUCTFOUND]]></Custom>
+			<RemoveExistingProducts Before="InstallInitialize" /> 
+		</InstallExecuteSequence>
+		
+		<CustomAction Id="CA_AdminUISequence" Property="InAdminUISequence" Value="1" Execute="firstSequence" />
+		<AdminUISequence> <!-- msiexec /a (or ACTION=ADMIN) + full UI or reduced UI -->
+			<Custom Action="CA_INSTALLDIR" Before="CostInitialize"><![CDATA[INSTALLDIR=""]]></Custom>
+			<Custom Action="CA_AdminUISequence" Before="CostInitialize"></Custom>
+			<Show Dialog="WelcomeForm" Before="CostFinalize"><![CDATA[(Not Installed And (Not SKIP_WELCOME_UI)) OR (Installed And (RESUME Or Preselected) And Not PATCH)]]></Show>
+			<Show Dialog="MaintenanceForm" Before="CostFinalize"><![CDATA[Installed And Not RESUME And Not Preselected And Not PATCH]]></Show>
+			<Show Dialog="ProgressForm" Before="ExecuteAction" />
+			
+			<Show Dialog="SetupCompleteError" OnExit="error"><![CDATA[NOT HideFatalErrorForm]]></Show>
+			<Show Dialog="SetupInterrupted" OnExit="cancel" />
+			<Show Dialog="SetupCompleteSuccess" OnExit="success" />
+		</AdminUISequence>
+		<AdminExecuteSequence>
+			<Custom Action="CA_INSTALLDIR" Before="CostInitialize"><![CDATA[INSTALLDIR=""]]></Custom>
+		</AdminExecuteSequence>
+		
+		<AdvertiseExecuteSequence> <!-- msiexec /j (or ACTION=ADVERTISE) -->
+		</AdvertiseExecuteSequence>
+		<!--AdvtExecuteSequence>
+		</AdvtExecuteSequence-->		
+		
+		<CustomAction Id="PreventDowngrading" Error="Newer version already installed." /> <!-- Prevent downgrading -->
+		<Upgrade Id="$(var.UpgradeCode)">
+			<UpgradeVersion Minimum="$(var.ProductVersion)" IncludeMinimum="no" OnlyDetect="yes" Property="NEWERPRODUCTFOUND" />
+			<UpgradeVersion Minimum="$(var.RTMProductVersion)" IncludeMinimum="yes" Maximum="$(var.ProductVersion)" IncludeMaximum="no" OnlyDetect="no" Property="UPGRADEFOUND" />
+			<!-- Detect for changes in 4th field only -->
+			<!-- UpgradeVersion Minimum="$(var.version)" IncludeMinimum="yes" Maximum="$(var.version)" IncludeMaximum="yes" OnlyDetect="yes" Property="ANOTHERBUILDINSTALLED" / -->
+		</Upgrade>
+		
+	</Product>
+</Wix>

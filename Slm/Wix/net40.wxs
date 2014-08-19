@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	
+	<Bundle
+		Name="{{AppDescription}}"
+		Version="{{AppVersion}}"
+		Manufacturer="{{Publisher}}"
+		UpgradeCode="{{UpgradeCode}}">
+	
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+		<Chain>
+			<PackageGroupRef Id="Netfx4Full" />
+			<PackageGroupRef Id="{{AppNameSpace}}" />
+		</Chain>
+
+	</Bundle>
+
+	<Fragment>
+	
+		<WixVariable Id="WixStdbaLicenseRtf" Value="./License.rtf" /> 
+	
+		<util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full" 
+			Value="Version" Variable="Netfx4FullVersion" />
+		<util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full" 
+			Value="Version" Variable="Netfx4x64FullVersion" Win64="yes" />
+	
+		<PackageGroup Id="Netfx4Full">
+			<ExePackage Id="Netfx4Full" Cache="no" Compressed="no" PerMachine="yes" Permanent="yes" Vital="yes"
+				SourceFile="../Binary/dotNetFx40_Full_x86_x64.exe"
+				DownloadUrl="http://go.microsoft.com/fwlink/?LinkId=164193"
+				DetectCondition="Netfx4FullVersion AND (NOT VersionNT64 OR Netfx4x64FullVersion)" />
+		</PackageGroup>
+		
+		<PackageGroup Id="{{AppNameSpace}}">
+			<MsiPackage Compressed="no" Vital="yes"
+				SourceFile="../../{{INSTALLER-OUTPUT}}"
+				After="Netfx4Full" />
+		</PackageGroup>
+		
+	</Fragment>
+	
+</Wix>

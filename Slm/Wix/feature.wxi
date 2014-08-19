@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"> 
+
+        <Feature Id="Complete" Absent="disallow" AllowAdvertise="system" Level="1" Title="Complete">
+			<ComponentRef Id="AutodeskComp" />
+			<ComponentRef Id="SlmComp" />
+       </Feature>
+		
+</Include>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"> 
+
+	<Directory Id="TARGETDIR" Name="SourceDir">
+	
+		<Directory Id="ProgramFilesFolder" SourceName="Program Files">
+			<Directory Id="Autodesk" Name="Autodesk">
+				<Component Id="AutodeskComp" Guid="{FE3F96AA-E397-4F73-90EA-008C5051A5CE}">
+					<RegistryValue Root="HKCU" Key="Software\Autodesk\Slm" Type="string" Value="" KeyPath="yes"/>
+					<RemoveFolder Id="AutodeskComp.u" On="uninstall" />  
+				</Component>
+
+				<Directory Id='Slm' Name='Slm'>
+					<Component Id='SlmComp' Guid='{DC23E1D4-8D79-413D-926E-3FF8A327FF0B}'>
+						<RegistryValue Root='HKCU' Key='Software\Autodesk\Slm' Type='string' Value='' KeyPath='yes' />
+						<RemoveFolder Id='Slm.u' On='uninstall' />
+						
+						<File Id='Slm.exe' Name='Slm.exe' Source='../bin/Release/Slm.exe' Vital='yes' DiskId='1' >
+							<Shortcut Id="ApplicationShortcutDesktop" Directory="DesktopFolder" Name="Slm" Description="AutoCAD Slide Manager" WorkingDirectory="PersonalFolder" Advertise="no" />
+						</File>
+						<File Id='Slm.exe.config' Name='Slm.exe.config' Source='../bin/Release/Slm.exe.config' Vital='yes' DiskId='1' />
+						<File Id='SlideCtrl.dll' Name='SlideCtrl.dll' Source='../bin/Release/SlideCtrl.dll' Vital='yes' DiskId='1' />
+						<File Id='MayaTheme.dll' Name='MayaTheme.dll' Source='../bin/Release/MayaTheme.dll' Vital='yes' DiskId='1' />
+						<File Id='Xceed.Wpf.Toolkit.dll' Name='Xceed.Wpf.Toolkit.dll' Source='../bin/Release/Xceed.Wpf.Toolkit.dll' Vital='yes' DiskId='1' />
+						
+					</Component>
+				</Directory>
+				
+			</Directory>
+		</Directory>
+		
+		<Directory Id="DesktopFolder" Name="Desktop" />
+
+	</Directory>
+
+</Include> 		

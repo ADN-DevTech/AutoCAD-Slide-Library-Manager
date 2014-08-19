@@ -21,7 +21,7 @@
 -->
 
 <!--
-	If we want to display more than one DateTemplate within the same ListView
+	If we want to display more than one DataTemplate within the same ListView
 	http://cloudstore.blogspot.fr/2008/06/creating-custom-view-mode-that-supports.html
 -->
 <Window x:Class="Autodesk.ADN.Slm.MainWindow"
@@ -81,7 +81,8 @@
 		<l:TileView x:Key="slideView" ItemTemplate="{StaticResource centralTile}" ItemWidth="100" />
 
 	</Window.Resources>
-	<DockPanel>
+	
+	<DockPanel x:Name="topElement">
 		<Grid x:Name="grid2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="6" />
@@ -123,6 +124,17 @@
 				<MenuItem Header="" ToolTip="Delete selected slides." Width="28" Click="DeleteSlides_Click">
 					<MenuItem.Icon>
 						<Image x:Name="DeleteSlides" Source="/Images/trash.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="" ToolTip="Help." Width="28" Click="Help_Click">
+					<MenuItem.Icon>
+						<Image x:Name="Help" Source="/Images/help.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Header="" ToolTip="About." Width="28" Click="About_Click">
+					<MenuItem.Icon>
+						<Image x:Name="About" Source="/Images/about.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 			</Menu>

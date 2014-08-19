@@ -36,6 +36,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using Autodesk.AutoCAD.Windows;
+using System.Reflection;
 
 namespace Autodesk.ADN.Slm {
 
@@ -151,6 +152,15 @@ namespace Autodesk.ADN.Slm {
 		public MainWindow () {
 			InitializeComponent () ;
 			Library.View =Library.FindResource ("slideView") as ViewBase ;
+
+			//Image firstTime =new Image () ;
+			//firstTime.BeginInit () ;
+			//firstTime.Source =new BitmapImage (new Uri (
+			//	  @"pack://application:,,,/" 
+			//	+ Assembly.GetExecutingAssembly ().GetName ().Name 
+			//	+ ";component" + "/Images/Slm-Help.png", UriKind.Absolute)) ;
+			//firstTime.EndInit () ;
+			//topElement.Children.Add (firstTime) ;
 		}
 
 		#endregion
@@ -330,6 +340,18 @@ namespace Autodesk.ADN.Slm {
 
 			preview.Slide =null ;
 			propertyGrid.SelectedObject =new SlmProperties (null, _slideLib) ;
+		}
+
+		private void Help_Click (object sender, RoutedEventArgs e) {
+			e.Handled =true ;
+			System.Diagnostics.Process.Start (new System.Diagnostics.ProcessStartInfo ("https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager")) ;
+		}
+
+		private void About_Click (object sender, RoutedEventArgs e) {
+			e.Handled =true ;
+			About dlg =new About () ;
+			dlg.Owner =this ;
+			dlg.Show () ;
 		}
 
 		private void Window_Closing (object sender, CancelEventArgs e) {

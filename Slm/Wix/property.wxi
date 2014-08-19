@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"> 
+
+	<Property Id="DefaultUIFont" Value="Tahoma8" /> <!-- UI default font -->
+	<Property Id="ErrorDialog" Value="SetupError" /> <!-- Specify the ErrorDialog name in use in UI.wxi -->
+
+	<!-- Exchange Store -->
+	<Property Id="EULAURL" Value="http://apps.exchange.autodesk.com/en/eula" />
+	<Property Id="DOCUMENTATIONURL" Value="https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager" />
+	<Property Id="FRIENDLYVERSION" Value="1.0.0" />
+	<Property Id="PRODUCTSHORTNAME" Value="Slm" />
+	<Property Id="PUBLISHEREMAIL" Value="labs.plugins@autodesk.com" />
+	<Property Id="REBOOT" Value="Suppress" />
+	
+	<!-- Maya -->
+	<!-- Property Id="MAYA_INSTALL_LOCATION">
+		<RegistrySearch Id="MayaLocation"
+			Root="HKLM" Key="SOFTWARE\Autodesk\Maya\{{VERSION}}\Setup\InstallPath" Name="MAYA_INSTALL_LOCATION" Type="directory" {{WIN64}} />
+	</Property -->
+	
+	<!-- ARP support -->
+	<Property Id="ARPCOMMENTS" Value="AutoCAD Slide Manager" />
+	<Property Id="ARPCONTACT" Value="labs.plugins@autodesk.com" />
+	<!-- Property Id="ARPPRODUCTICON" Value="{{AppName}}.ico" / -->
+	<Property Id="ARPHELPLINK" Value="https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager" />
+	<!-- Property Id="ARPREADME" Value="Your README link" / -->
+	<Property Id="ARPURLINFOABOUT" Value="https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager" />
+	<!-- Property Id="ARPURLUPDATEINFO" Value="{{PublisherURL}}" / -->
+	<Property Id="ARPHELPTELEPHONE" Value="{{PublisherPhone}}" />
+	<!-- Property Id="ARPAUTHORIZEDCDFPREFIX" Value="URL of the update channel for the application" / -->
+	<!-- Property Id="ARPSIZE" Value="1200" / -->
+	<!--
+	<Property Id="ARPNOMODIFY" Value="0" />
+	<Property Id="ARPNOREPAIR" Value="0" />
+	<Property Id="ARPNOREMOVE" Value="0" />
+	<Property Id="ARPSYSTEMCOMPONENT" Value="0" />
+	-->		
+
+</Include> 		
