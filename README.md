@@ -75,11 +75,15 @@ is equivalent to
 This control allows you to display AutoCAD Slides in a WPF application.
 
   1. Add  the following line to your WPF Window xaml<br />
+``` xml
       xmlns:SlideCtrlNS="clr-namespace:Autodesk.AutoCAD.Windows;assembly=SlideCtrl"
+```
   2. Insert the control in you window like this<br />
-      &lt;SlideCtrlNS:SlideCtrl x:Name="preview" /&gt;
+``` xml
+      <SlideCtrlNS:SlideCtrl x:Name="preview" />
+```
 
-``` xaml
+``` xml
 <Window x:Class="WpfApplication1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -90,6 +94,18 @@ This control allows you to display AutoCAD Slides in a WPF application.
 		<SlideCtrlNS:SlideCtrl x:Name="preview" SlideFileName="MySlide.sld" />
 	</Grid>
 </Window>
+```
+``` c#
+	using Autodesk.AutoCAD.Windows;
+
+	SlideObject sld = new SlideObject(@"MySlide.sld");
+	preview.Slide = sld;
+```
+or
+``` c#
+	using Autodesk.AutoCAD.Windows;
+
+	preview.SlideFileName = @"MySlide.sld";
 ```
 
 
