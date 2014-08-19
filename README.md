@@ -15,17 +15,31 @@ It can be used by any other WPF application. It exposes three objects which are:
   * SlideLibObject - which gives you access to Slide Libraries. I.e. SLB
   * SlideCtrl - the control itself
 
+  
+Install using NuGet:
+  1. Create a Wpf Application 
+  2. Project -> Manage NuGet Packages...
+  3. Search and Install 'AutoCAD Slide Control' package
+
+
 SlideObject
 -------------------
+This class gives you access to 'slide' object.
 
 
 SlideLibObject
 -------------------
+This class gives you access to 'slide library' object.
 
 
 SlideCtrl
 -------------------
+This control allows you to display AutoCAD Slides in a WPF application.
 
+  1. Add  the following line to your WPF Window xaml
+      xmlns:SlideCtrlNS="clr-namespace:Autodesk.AutoCAD.Windows;assembly=SlideCtrl"
+  2. Insert the control in you window like this
+      <SlideCtrlNS:SlideCtrl x:Name="preview" />
 
 
 ## License

@@ -7,7 +7,7 @@
         <authors>Cyrille Fauvel</authors>
         <owners>Autodesk Developer Network</owners>
         <licenseUrl>https://raw.github.com/ADN-DevTech/AutoCAD-Slide-Control/master/LICENSE.md</licenseUrl>
-        <projectUrl>https://github.com/ADN-DevTech/AutoCAD-Slide-Control</projectUrl>
+        <projectUrl>https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>AutoCAD WPF Slide control</description>
         <copyright>Autodesk, Inc.</copyright>
