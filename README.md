@@ -117,10 +117,8 @@ Autodesk Slide Control / Slide Library Manager Application are licensed under th
 
 ## Written by
 
-Cyrille Fauvel
-
-Autodesk Developer Network
-
-Autodesk Inc.
+Cyrille Fauvel<br />
+Autodesk Developer Network<br />
+Autodesk Inc.<br />
 
 http://www.autodesk.com/adn  
