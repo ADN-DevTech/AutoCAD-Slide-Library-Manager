@@ -5,6 +5,8 @@ Slm is a utility which helps you to create, edit, and manage AutoCAD slide libra
 It can read any version of AutoCAD slides, or slide libraries. 
 It can also read any slide format (platform dependent such as UNIX, MAC, INTEL), and convert them into PNG transparent images.
 
+[Download the installer here](https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager/blob/master/Slm/Wix/AutoCADSlideLibraryManager.msi?raw=true)
+
 ![Slm Help](https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager/blob/master/Slm/Help/Slm-Help.png)
 
 ## The WPF Slide Control
