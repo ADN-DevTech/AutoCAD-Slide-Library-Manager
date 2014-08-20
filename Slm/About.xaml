@@ -77,9 +77,9 @@
 			<Label x:Name="productName" Content="AutoCAD Slide Manager" />
 			<StackPanel Orientation="Horizontal">
 				<Label x:Name="versionLabel" Content="Version - " />
-				<Label x:Name="version" Content="1.0.0" />
+				<Label x:Name="version" Content="1.0.2" />
 			</StackPanel>
-			<Label x:Name="copyright" Content="Copyright ©  2014"  />
+			<Label x:Name="copyright" Content="Copyright © 2014"  />
 			<Label x:Name="company" Content="Autodesk, Inc." />
 			<Label x:Name="reserved" Content="All Rights Reserved." />
 			<Label x:Name="author" Content="by Cyrille Fauvel, Autodesk Developer Network" />

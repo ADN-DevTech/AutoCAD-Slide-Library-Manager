@@ -100,10 +100,14 @@
 			<Menu DockPanel.Dock="Top" Grid.Column="0" Grid.ColumnSpan="5">
 				<MenuItem Header="" ToolTip="New library / Clear." Width="28" Click="NewLibrary_Click">
 					<MenuItem.Icon>
-						<Image x:Name="NewLibrary" Source="/Images/library.png" />
+						<Image x:Name="NewLibrary" Source="/Images/new.png" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<Separator />
+				<MenuItem Header="" ToolTip="Open library." Width="28" Click="OpenLibrary_Click">
+					<MenuItem.Icon>
+						<Image x:Name="OpenLibrary" Source="/Images/library.png" />
+					</MenuItem.Icon>
+				</MenuItem>
 				<MenuItem Header="" ToolTip="Save library." Width="28" Click="SaveLibrary_Click">
 					<MenuItem.Icon>
 						<Image x:Name="SaveLibrary" Source="/Images/save.png" />
@@ -115,7 +119,7 @@
 						<Image x:Name="ExtractSlides" Source="/Images/extract.png" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<MenuItem Header="" ToolTip="Export selected slides." Width="28" Click="ExportSlides_Click">
+				<MenuItem Header="" ToolTip="Export selected slides as PNG." Width="28" Click="ExportSlides_Click">
 					<MenuItem.Icon>
 						<Image x:Name="ExportSlides" Source="/Images/export.png" />
 					</MenuItem.Icon>

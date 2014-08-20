@@ -428,6 +428,9 @@ namespace Autodesk.AutoCAD.Windows {
 						polygon.Fill =brush ;
 						polygon.Stroke =brush ;
 						polygon.StrokeThickness =1 ;
+						//----- Just in case we draw a point or a too small line.
+						polygon.SnapsToDevicePixels =true ;
+						pdc.Children.Add (polygon) ;
 						break ;
 					case 0xfc: //----- End of File
 						i +=2 ;

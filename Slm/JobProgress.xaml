@@ -1,0 +1,38 @@
+﻿<!--
+// (C) Copyright 2014 by Autodesk, Inc.
+//
+// Permission to use, copy, modify, and distribute this software in
+// object code form for any purpose and without fee is hereby granted, 
+// provided that the above copyright notice appears in all copies and 
+// that both that copyright notice and the limited warranty and
+// restricted rights notice below appear in all supporting 
+// documentation.
+//
+// AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
+// AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
+// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC. 
+// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+
+//- Written by Cyrille Fauvel, Autodesk Developer Network (ADN)
+//- http://www.autodesk.com/joinadn
+//- August 20th, 2014
+//
+-->
+<Window x:Class="Autodesk.ADN.Slm.JobProgress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Slm Job Progress"
+		Height="165" Width="470"
+		Top="150" Left="0"
+		Style="{DynamicResource MayaStyle}"
+		Icon="Images/Slm.ico"
+		WindowStyle="None"
+		ResizeMode="NoResize"
+		Cursor="Wait" Loaded="Window_Loaded"
+		>
+	<Grid>
+		<ProgressBar x:Name="progressBar" Margin="10,66,10,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" IsIndeterminate="True" />
+		<Label x:Name="progressMsg" Content="Loading and Generating slide badges" Margin="10,126,10,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Center" RenderTransformOrigin="0.846,-1.077" Width="Auto" Height="19" />
+	</Grid>
+</Window>

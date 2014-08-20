@@ -35,8 +35,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
-using Autodesk.AutoCAD.Windows;
 using System.Reflection;
+using System.Threading;
+using System.Windows.Threading;
+using Autodesk.AutoCAD.Windows;
+using System.Windows.Interop;
 
 namespace Autodesk.ADN.Slm {
 
@@ -145,7 +148,9 @@ namespace Autodesk.ADN.Slm {
 		private SlideLibObject _slideLib =new SlideLibObject () ;
 		private bool _dirty =false ;
 		private Point _mouseStart ;
-
+		private Thread _waitThread ;
+		private JobProgress _waitDialog ;
+		private Thickness _margins ;
 		#endregion
 
 		#region Constructors
@@ -180,25 +185,94 @@ namespace Autodesk.ADN.Slm {
 			propertyGrid.SelectedObject =new SlmProperties (sld, _slideLib) ;
 		}
 
-		private void Library_Drop (object sender, System.Windows.DragEventArgs e) {
-			e.Handled =true ;
+		private void RunWaitThread () {
+			_waitDialog =new JobProgress (_margins) ;
+			_waitDialog.ShowDialog () ;
+		}
 
-			string [] files =(string [])e.Data.GetData (System.Windows.DataFormats.FileDrop) ;
-			//ObservableCollection<SlmVignette> items =new ObservableCollection<SlmVignette> ((IEnumerable<SlmVignette>)Library.ItemsSource) ;
-			foreach ( string fileName in files ) {
-				if ( SlideLibObject.IsSlideLibrary (fileName) ) {
-					SlideLibObject slb =new SlideLibObject (fileName) ;
-					_slideLib._Slides =_slideLib._Slides.Concat (slb._Slides).GroupBy (d => d.Key)
-						.ToDictionary (d => d.Key, d => d.First ().Value) ;
-					_dirty =true ;
+		private void MergeAndGenerateBadges (string [] files) {
+			Point pt =Library.PointToScreen (new Point (0, 0)) ;
+			_margins =new Thickness (pt.X, pt.Y, pt.X + Library.ActualWidth, pt.Y + Library.ActualHeight) ;
+
+			_waitThread =new Thread (this.RunWaitThread) ;
+			_waitThread.IsBackground =true ;
+			_waitThread.SetApartmentState (ApartmentState.STA) ;
+			_waitThread.Start () ;
+			Thread.Sleep (0) ;
+
+				ObservableCollection<SlmVignette> items =new ObservableCollection<SlmVignette> () ;
+				if ( Library.ItemsSource != null )
+					items =new ObservableCollection<SlmVignette> ((IEnumerable<SlmVignette>)Library.ItemsSource) ;
+				foreach ( string fileName in files ) {
+					if ( SlideLibObject.IsSlideLibrary (fileName) ) {
+						SlideLibObject slb =new SlideLibObject (fileName) ;
+						//_slideLib._Slides =_slideLib._Slides.Concat (slb._Slides).GroupBy (d => d.Key)
+						//	.ToDictionary (d => d.Key, d => d.First ().Value) ;
+						foreach ( KeyValuePair<string, SlideObject> slide in slb._Slides ) {
+							string name =slide.Key ;
+							if ( _slideLib._Slides.ContainsKey (slide.Key) ) {
+								for ( int i =0 ;; i++ ) {
+									string st =name + i ;
+									if ( !_slideLib._Slides.ContainsKey (st) ) {
+										name =st ;
+										break ;
+									}
+								}
+							}
+							_slideLib._Slides.Add (name, slide.Value) ;
+
+							items.Add (new SlmVignette () {
+								Name =name,
+								Type =slide.Value._Size.Width + "x" + slide.Value._Size.Height,
+								Image =slide.Value.Export (70, 70)
+							}) ;
+						}
+						_dirty =true ;
+					}
+					if ( SlideObject.IsSlide (fileName) && !_slideLib._Slides.ContainsKey (System.IO.Path.GetFileNameWithoutExtension (fileName)) ) {
+						SlideObject sld =new SlideObject (fileName) ;
+						sld._Name =System.IO.Path.GetFileNameWithoutExtension (fileName) ;
+						_slideLib._Slides.Add (sld._Name, sld) ;
+						_dirty =true ;
+
+						items.Add (new SlmVignette () {
+							Name =sld._Name,
+							Type =sld._Size.Width + "x" + sld._Size.Height,
+							Image =sld.Export (70, 70)
+						}) ;
+					}
+					Thread.Sleep (0) ;
 				}
-				if ( SlideObject.IsSlide (fileName) && !_slideLib._Slides.ContainsKey (System.IO.Path.GetFileNameWithoutExtension (fileName)) ) {
-					SlideObject sld =new SlideObject (fileName) ;
-					sld._Name =System.IO.Path.GetFileNameWithoutExtension (fileName) ;
-					_slideLib._Slides.Add (sld._Name, sld) ;
-					_dirty =true ;
-				}
-			}
+
+				//ObservableCollection<SlmVignette> items =new ObservableCollection<SlmVignette> () ;
+				//foreach ( KeyValuePair<string, SlideObject> slide in _slideLib._Slides ) {
+				//	items.Add (new SlmVignette () {
+				//		Name =slide.Key,
+				//		Type =slide.Value._Size.Width + "x" + slide.Value._Size.Height,
+				//		Image =slide.Value.Export (70, 70)
+				//	}) ;
+				//}
+
+				Library.ItemsSource =items ;
+				Library.Items.Refresh () ;
+
+			while ( _waitDialog == null )
+				Thread.Sleep (10) ;
+			_waitDialog.Dispatcher.BeginInvoke (DispatcherPriority.Normal, (Action) (() => {
+				_waitDialog.Close () ;
+			})) ;
+			_waitThread.Abort () ;
+		}
+
+		private void GenerateBadges () {
+			Point pt =Library.PointToScreen (new Point (0, 0)) ;
+			_margins =new Thickness (pt.X, pt.Y, pt.X + Library.ActualWidth, pt.Y + Library.ActualHeight) ;
+
+			_waitThread =new Thread (this.RunWaitThread) ;
+			_waitThread.IsBackground =true ;
+			_waitThread.SetApartmentState (ApartmentState.STA) ;
+			_waitThread.Start () ;
+			Thread.Sleep (0) ;
 
 			ObservableCollection<SlmVignette> items =new ObservableCollection<SlmVignette> () ;
 			foreach ( KeyValuePair<string, SlideObject> slide in _slideLib._Slides ) {
@@ -207,10 +281,24 @@ namespace Autodesk.ADN.Slm {
 					Type =slide.Value._Size.Width + "x" + slide.Value._Size.Height,
 					Image =slide.Value.Export (70, 70)
 				}) ;
+				Thread.Sleep (0) ;
 			}
 
 			Library.ItemsSource =items ;
 			Library.Items.Refresh () ;
+
+			while ( _waitDialog == null )
+				Thread.Sleep (10) ;
+			_waitDialog.Dispatcher.BeginInvoke (DispatcherPriority.Normal, (Action) (() => {
+				_waitDialog.Close () ;
+			})) ;
+			_waitThread.Abort () ;
+		}
+
+		private void Library_Drop (object sender, System.Windows.DragEventArgs e) {
+			e.Handled =true ;
+			string [] files =(string [])e.Data.GetData (System.Windows.DataFormats.FileDrop) ;
+			MergeAndGenerateBadges (files) ;
 		}
 
 		private void Library_MouseLeftButtonDown (object sender, MouseButtonEventArgs e) {
@@ -270,6 +358,31 @@ namespace Autodesk.ADN.Slm {
 			_slideLib =new SlideLibObject () ;
 			Library.ItemsSource =new ObservableCollection<SlmVignette> () ;
 			Library.Items.Refresh () ;
+			_dirty =false ;
+
+			preview.Slide =null ;
+			propertyGrid.SelectedObject =new SlmProperties (null, _slideLib) ;
+		}
+
+		private void OpenLibrary_Click (object sender, RoutedEventArgs e) {
+			e.Handled =true ;
+			if ( _dirty ) {
+				if ( System.Windows.MessageBox.Show ("Save Library first?", "Slm", MessageBoxButton.YesNo) == MessageBoxResult.Yes ) {
+					if ( !CheckLibraryFileName () )
+						return ;
+					_slideLib.Save () ;
+				}
+			}
+			// Clear / New library
+			Microsoft.Win32.OpenFileDialog dlg =new Microsoft.Win32.OpenFileDialog () ;
+			dlg.DefaultExt =".slb" ; // Default file extension
+			dlg.Filter ="AutoCAD Slide Library|*.slb|AutoCAD Slide|*.sld" ; // Filter files by extension
+			Nullable<bool> result =dlg.ShowDialog () ;
+			if ( result == false )
+				return ;
+
+			_slideLib =new SlideLibObject (dlg.FileName) ;
+			GenerateBadges () ;
 			_dirty =false ;
 
 			preview.Slide =null ;
