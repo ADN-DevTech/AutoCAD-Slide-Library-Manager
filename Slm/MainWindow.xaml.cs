@@ -190,7 +190,7 @@ namespace Autodesk.ADN.Slm {
 			_waitDialog.ShowDialog () ;
 		}
 
-		private void MergeAndGenerateBadges (string [] files) {
+		private ObservableCollection<SlmVignette> MergeAndGenerateBadges (string [] files) {
 			Point pt =Library.PointToScreen (new Point (0, 0)) ;
 			_margins =new Thickness (pt.X, pt.Y, pt.X + Library.ActualWidth, pt.Y + Library.ActualHeight) ;
 
@@ -200,6 +200,7 @@ namespace Autodesk.ADN.Slm {
 			_waitThread.Start () ;
 			Thread.Sleep (0) ;
 
+				ObservableCollection<SlmVignette> newItems =new ObservableCollection<SlmVignette> () ;
 				ObservableCollection<SlmVignette> items =new ObservableCollection<SlmVignette> () ;
 				if ( Library.ItemsSource != null )
 					items =new ObservableCollection<SlmVignette> ((IEnumerable<SlmVignette>)Library.ItemsSource) ;
@@ -221,11 +222,13 @@ namespace Autodesk.ADN.Slm {
 							}
 							_slideLib._Slides.Add (name, slide.Value) ;
 
-							items.Add (new SlmVignette () {
+							SlmVignette badge =new SlmVignette () {
 								Name =name,
 								Type =slide.Value._Size.Width + "x" + slide.Value._Size.Height,
 								Image =slide.Value.Export (70, 70)
-							}) ;
+							} ;
+							items.Add (badge) ;
+							newItems.Add (badge) ;
 						}
 						_dirty =true ;
 					}
@@ -235,33 +238,30 @@ namespace Autodesk.ADN.Slm {
 						_slideLib._Slides.Add (sld._Name, sld) ;
 						_dirty =true ;
 
-						items.Add (new SlmVignette () {
+						SlmVignette badge =new SlmVignette () {
 							Name =sld._Name,
 							Type =sld._Size.Width + "x" + sld._Size.Height,
 							Image =sld.Export (70, 70)
-						}) ;
+						} ;
+						items.Add (badge) ;
+						newItems.Add (badge) ;
 					}
 					Thread.Sleep (0) ;
 				}
 
-				//ObservableCollection<SlmVignette> items =new ObservableCollection<SlmVignette> () ;
-				//foreach ( KeyValuePair<string, SlideObject> slide in _slideLib._Slides ) {
-				//	items.Add (new SlmVignette () {
-				//		Name =slide.Key,
-				//		Type =slide.Value._Size.Width + "x" + slide.Value._Size.Height,
-				//		Image =slide.Value.Export (70, 70)
-				//	}) ;
-				//}
-
 				Library.ItemsSource =items ;
 				Library.Items.Refresh () ;
 
+			Thread.Sleep (200) ;
 			while ( _waitDialog == null )
-				Thread.Sleep (10) ;
+				Thread.Sleep (100) ;
 			_waitDialog.Dispatcher.BeginInvoke (DispatcherPriority.Normal, (Action) (() => {
 				_waitDialog.Close () ;
 			})) ;
-			_waitThread.Abort () ;
+			if ( _waitThread.IsAlive )
+				_waitThread.Abort () ;
+
+			return (newItems) ;
 		}
 
 		private void GenerateBadges () {
@@ -298,7 +298,11 @@ namespace Autodesk.ADN.Slm {
 		private void Library_Drop (object sender, System.Windows.DragEventArgs e) {
 			e.Handled =true ;
 			string [] files =(string [])e.Data.GetData (System.Windows.DataFormats.FileDrop) ;
-			MergeAndGenerateBadges (files) ;
+			ObservableCollection<SlmVignette> newItems =MergeAndGenerateBadges (files) ;
+			//Library.SelectedItems.Clear () ;
+			//Library.SelectedItems.Add (newItems) ;
+
+			Library.ScrollIntoView (newItems [0]) ;
 		}
 
 		private void Library_MouseLeftButtonDown (object sender, MouseButtonEventArgs e) {

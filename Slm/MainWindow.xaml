@@ -37,32 +37,6 @@
 		>
 	<Window.Resources>
 
-		<!--DataTemplate x:Key="centralTile">
-			<StackPanel Height="100" Width="100">
-				<Grid Width="95" Height="70" HorizontalAlignment="Center">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="16" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}" />
-					<Image Grid.Column="1" Source="{Binding XPath=@Image}" Margin="6,6,6,9"/>
-				</Grid>
-				<TextBlock Text="{Binding XPath=@Name}" HorizontalAlignment="Center" Margin="0,0,0,1" />
-				<TextBlock Text="{Binding XPath=@Type}" HorizontalAlignment="Center" Margin="0,0,0,1" />
-			</StackPanel>
-		</DataTemplate>
-		<XmlDataProvider x:Key="myXmlDataBase" XPath="/myXmlData">
-			<x:XData>
-				<myXmlData xmlns="">
-					<Item Name ="ReCap0" Type ="jpg" Image ="Images\ReCap0.jpg" />
-					<Item Name ="ReCap1" Type ="jpg" Image ="Images\ReCap1.jpg" />
-					<Item Name ="ReCap2" Type ="jpg" Image ="Images\ReCap2.jpg" />
-					<Item Name ="ReCap3" Type ="jpg" Image ="Images\ReCap3.jpg" />
-					<Item Name ="ReCap4" Type ="jpg" Image ="Images\ReCap4.jpg" />
-				</myXmlData>
-			</x:XData>
-		</XmlDataProvider-->
-
 		<DataTemplate x:Key="centralTile">
 			<StackPanel Height="100" Width="100" ToolTip="{Binding Name}" Margin="2">
 				<Grid Width="95" Height="70" HorizontalAlignment="Center">
@@ -70,7 +44,7 @@
 						<ColumnDefinition Width="16" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}" />
+					<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}, Mode=TwoWay}" />
 					<Image Grid.Column="1" Source="{Binding Image, Converter={StaticResource ImageSourceConverter}}" Margin="6,6,6,9" />
 				</Grid>
 				<TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,0,0,1" />
@@ -144,7 +118,10 @@
 			</Menu>
 
 			<ListView x:Name="Library" Grid.Column="1" Grid.Row="1"
-				Width="Auto" Height="Auto" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Drop="Library_Drop" AllowDrop="True" SelectionChanged="Library_SelectionChanged" MouseLeftButtonDown="Library_MouseLeftButtonDown" MouseMove="Library_MouseMove">
+					Width="Auto" Height="Auto" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+					Drop="Library_Drop" AllowDrop="True"
+					SelectionChanged="Library_SelectionChanged" 
+					MouseLeftButtonDown="Library_MouseLeftButtonDown" MouseMove="Library_MouseMove">
 				<ListView.ContextMenu>
 					<ContextMenu>
 						<MenuItem Header="Extract" Click="ExtractSlides_Click">
