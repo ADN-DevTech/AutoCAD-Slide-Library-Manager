@@ -7,7 +7,7 @@
 	<!-- Exchange Store -->
 	<Property Id="EULAURL" Value="http://apps.exchange.autodesk.com/en/eula" />
 	<Property Id="DOCUMENTATIONURL" Value="https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager" />
-	<Property Id="FRIENDLYVERSION" Value="1.0.0" />
+	<Property Id="FRIENDLYVERSION" Value="1.0.2" />
 	<Property Id="PRODUCTSHORTNAME" Value="Slm" />
 	<Property Id="PUBLISHEREMAIL" Value="labs.plugins@autodesk.com" />
 	<Property Id="REBOOT" Value="Suppress" />
@@ -21,12 +21,12 @@
 	<!-- ARP support -->
 	<Property Id="ARPCOMMENTS" Value="AutoCAD Slide Manager" />
 	<Property Id="ARPCONTACT" Value="labs.plugins@autodesk.com" />
-	<!-- Property Id="ARPPRODUCTICON" Value="{{AppName}}.ico" / -->
+	<!-- Property Id="ARPPRODUCTICON" Value="Slm.ico" / -->
 	<Property Id="ARPHELPLINK" Value="https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager" />
 	<!-- Property Id="ARPREADME" Value="Your README link" / -->
 	<Property Id="ARPURLINFOABOUT" Value="https://github.com/ADN-DevTech/AutoCAD-Slide-Library-Manager" />
-	<!-- Property Id="ARPURLUPDATEINFO" Value="{{PublisherURL}}" / -->
-	<Property Id="ARPHELPTELEPHONE" Value="{{PublisherPhone}}" />
+	<!-- Property Id="ARPURLUPDATEINFO" Value="Autodesk" / -->
+	<Property Id="ARPHELPTELEPHONE" Value=" " />
 	<!-- Property Id="ARPAUTHORIZEDCDFPREFIX" Value="URL of the update channel for the application" / -->
 	<!-- Property Id="ARPSIZE" Value="1200" / -->
 	<!--
