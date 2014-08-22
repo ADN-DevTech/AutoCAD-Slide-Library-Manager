@@ -80,7 +80,7 @@ namespace Autodesk.ADN.Slm {
 		[Description("Slide Name")]
 		public string sldName { get; private set; }
 		[Category("Slide")]
-		[DisplayName("File name (byte)")]
+		[DisplayName("File name")]
 		[Description("Slide file name")]
 		public string sldFileName { get; private set; }
 		[Category("Slide")]
