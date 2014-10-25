@@ -158,6 +158,7 @@ namespace Autodesk.AutoCAD.Windows {
 				return (false) ;
 			byte [] file =new byte [_FileLength] ;
 			System.Buffer.BlockCopy (ASCIIEncoding.ASCII.GetBytes (_slbHeaderSignature), 0, file, 0, _slbHeaderSignature.Length) ;
+			file [_slbHeaderSignature.Length] =0x0d ; file [_slbHeaderSignature.Length + 1] =0x0a ; file [_slbHeaderSignature.Length + 2] =0x1a ;
 			int i =0, cIndex =(_Slides.Count + 1) * _slbHeaderSlideEntryLength + _slbHeaderSignatureLength ;
 			foreach ( KeyValuePair<string, SlideObject> slide in _Slides ) {
 				int hIndex =(i++) * _slbHeaderSlideEntryLength + _slbHeaderSignatureLength ;
